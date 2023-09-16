@@ -62,6 +62,8 @@ jobs:
              Remove-Item dist -Recurse
              Remove-Item .github -Recurse
              del *.spec
+             del *.txt
+             del *.ico
              ls
       - name: Upload Win Build
         if: success()
