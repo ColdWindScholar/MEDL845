@@ -1,0 +1,69 @@
+name: "Build Tool"
+permissions:
+  contents: write
+  discussions: write
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build:
+    needs: [build-win]
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: ["3.8.10"]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+      - name: Rename Tool
+        run: |
+          cd build
+          Remove-Item .git -Recurse
+          ls
+          Compress-Archive -Path ./* -DestinationPath ../MEDL.zip
+          cd ..
+      - name: Upload release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          omitBodyDuringUpdate: true
+          removeArtifacts: true
+          name: "MEDL"
+          tag: "CI_BUILD_${{ github.run_number }}"
+          body: |
+            Build times: ${{ github.run_number }}
+          artifacts: "*.zip"
+
+  build-win:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.8.10
+        uses: actions/setup-python@v4
+        with:
+          # Semantic version range syntax or exact version of a Python version
+          python-version: '3.8.10'
+          # Optional - x64 or x86 architecture, defaults to x64
+          architecture: 'x86'
+      # You can test your matrix by printing the current Python version
+      - name: Update pip
+        run:  python -m pip install -U --force-reinstall pip
+      - name: Install Packages
+        run: pip install -r requirements.txt
+      - name: Pack tool
+        run: |
+             pyinstaller -Fw 小米845免受权9008工具.py --exclude-module=numpy
+             move dist/小米845免受权9008工具.py.exe ./
+             del *.py
+             Remove-Item build -Recurse
+             Remove-Item dist -Recurse
+             Remove-Item .github -Recurse
+             del *.spec
+             ls
+      - name: Upload Win Build
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: './*'
