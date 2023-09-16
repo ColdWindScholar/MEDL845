@@ -55,7 +55,7 @@ jobs:
         run: pip install -r requirements.txt
       - name: Pack tool
         run: |
-             pyinstaller -Fw 小米845免受权9008工具.py --exclude-module=numpy -i icon.ico
+             pyinstaller -Fw 小米845免受权9008工具.py --exclude-module=numpy --uac-admin -i icon.ico
              move dist/小米845免受权9008工具.exe ./
              del *.py
              Remove-Item build -Recurse
