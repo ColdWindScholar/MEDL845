@@ -111,7 +111,8 @@ class MyTool(Tk):
         self.init_tab1()
         self.init_djt()
         self.init_about()
-        print("欢迎使用本工具。\n本工具永久免费,禁止倒卖!\n开发者： ColdWindScholar & XEKNICE & AGXMX")
+        print("欢迎使用本工具。\n本工具永久免费,禁止倒卖!\n开发者： ColdWindScholar & XEKNICE & "
+              "AGXMX\n开源地址:https://github.com/ColdWindScholar/MEDL845")
 
     def init_tab(self):
         # ----
