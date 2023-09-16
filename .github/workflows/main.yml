@@ -4,6 +4,8 @@ permissions:
   discussions: write
 on:
   push:
+    paths:
+      -"小米845免受权9008工具.py"
   pull_request:
   workflow_dispatch:
 jobs:
