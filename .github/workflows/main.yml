@@ -64,7 +64,6 @@ jobs:
              del *.spec
              del *.txt
              del *.ico
-             Remove-Item .git -Recurse
              ls
       - name: Upload Win Build
         if: success()
