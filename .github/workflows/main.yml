@@ -31,7 +31,7 @@ jobs:
           allowUpdates: true
           omitBodyDuringUpdate: true
           removeArtifacts: true
-          name: "MEDL"
+          name: "MEDL-3.2.${{ github.run_number }}"
           tag: "CI_BUILD_${{ github.run_number }}"
           body: |
             Build times: ${{ github.run_number }}
@@ -64,6 +64,7 @@ jobs:
              del *.spec
              del *.txt
              del *.ico
+             Remove-Item .git -Recurse
              ls
       - name: Upload Win Build
         if: success()
