@@ -54,7 +54,7 @@ jobs:
       - name: Pack tool
         run: |
              pyinstaller -Fw 小米845免受权9008工具.py --exclude-module=numpy
-             move dist/小米845免受权9008工具.py.exe ./
+             move dist/小米845免受权9008工具.exe ./
              del *.py
              Remove-Item build -Recurse
              Remove-Item dist -Recurse
