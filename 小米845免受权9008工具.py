@@ -233,14 +233,14 @@ class MyTool(Tk):
         call('res/USB.bat')
 
     def SM(self):
-        cmd2 = 'start %cd%/res/SM.png'
+        cmd2 = 'start res/SM.png'
         os.system(cmd2)
 
     def fbMIX2S(self):
         os.system("start res\\fbimg.bat")
 
     def ZHS(self):
-        messagebox.showinfo('注意', '此功能仅限于845系列\n手机先解bootloader进入fastboot模式')
+        messagebox.showinfo('注意', '此功能仅限于845系列\n手机先进入TWRP模式')
         unlock_miacc()
 
     def BL(self):
