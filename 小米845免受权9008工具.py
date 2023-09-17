@@ -102,14 +102,17 @@ class MyTool(Tk):
         self.notepad.pack(fill=BOTH)
         self.tab = ttk.Frame(self.notepad)
         self.tab1 = ttk.Frame(self.notepad)
+        self.flash = ttk.Frame(self.notepad)
         self.djt = ttk.Frame(self.notepad)
         self.about = ttk.Frame(self.notepad)
         self.notepad.add(self.tab, text="刷机救砖")
+        self.notepad.add(self.flash, text="线刷工具箱")
         self.notepad.add(self.djt, text="短接图")
         self.notepad.add(self.tab1, text="其他")
         self.notepad.add(self.about, text="关于")
         self.init_tab()
         self.init_tab1()
+        self.init_flash()
         self.init_djt()
         self.init_about()
         print("欢迎使用本工具。\n本工具永久免费,禁止倒卖!\n开发者： ColdWindScholar & XEKNICE & "
@@ -154,6 +157,72 @@ class MyTool(Tk):
                                 command=lambda: cz(os.system, "start res\\fbimg.bat"), width=20)
         self.GY_button.pack(padx=5, pady=5)
 
+    def init_flash(self):
+        def disable():
+            self.file_entry.configure(state='disabled')
+            self.flash_reboot.configure(state='disabled')
+            self.flash_run.configure(state='disabled')
+
+        def able():
+            self.file_entry.configure(state='normal')
+            self.flash_reboot.configure(state='normal')
+            self.flash_run.configure(state='normal')
+
+        def set_img():
+            if path := self.select_file():
+                self.file_entry.setvar(path)
+
+        def run():
+            self.flash_run.configure(text='正在执行')
+            disable()
+            if self.flash_cz.get() == 1:
+                call(f'fastboot flash {self.part.get()} {self.file_entry.get()}')
+            elif self.flash_cz.get() == 2:
+                call(f'fastboot erase {self.part.get()}')
+            elif self.flash_cz.get() == 3:
+                call(f'fastboot boot {self.file_entry.get()}')
+            self.flash_run.configure(text='执行')
+            able()
+
+        def reboot():
+            self.flash_reboot.configure(text='正在重启')
+            disable()
+            call('fastboot reboot')
+            self.flash_reboot.configure(text='重启')
+            able()
+
+        Label(self.flash, text='线刷工具箱', font=(None, 15)).pack(side=TOP, padx=5, pady=5)
+        # ----
+        Frame = ttk.Frame(self.flash)
+        Label(Frame, text='镜像文件:').pack(side=LEFT, padx=5, pady=5)
+        self.file_entry = Entry(Frame)
+        self.file_entry.pack(side=LEFT, padx=5, pady=5)
+        self.file_button = Button(Frame, text='浏览', command=set_img)
+        self.file_button.pack(side=LEFT, padx=5, pady=5)
+        Frame.pack(fill=X, padx=5, pady=5)
+        # -----
+        # ---
+        Frame = ttk.Frame(self.flash)
+        Label(Frame, text='操作分区:').pack(side=LEFT, padx=5, pady=5)
+        self.part = ttk.Combobox(Frame, values=['recovery', 'boot', 'system', 'vendor'])
+        self.part.current(0)
+        self.part.pack(side=LEFT)
+        Frame.pack(fill=X, padx=5, pady=5)
+        # ---
+        Frame = ttk.Frame(self.flash)
+        Label(Frame, text='操作:').pack(side=LEFT, padx=5, pady=5)
+        self.flash_cz = tk.IntVar()
+        self.flash_cz.set(1)
+        cs = 0
+        for v in ['刷入', '擦除', '临时启动']:
+            cs += 1
+            ttk.Radiobutton(Frame, text=v, variable=self.flash_cz, value=cs).pack(side=LEFT, padx=2, pady=2)
+        Frame.pack(fill=X, padx=5, pady=5)
+        self.flash_run = Button(self.flash, text='执行', command=lambda: cz(run))
+        self.flash_run.pack(fill=X, padx=5, pady=5)
+        self.flash_reboot = Button(self.flash, text='重启手机', command=lambda :cz(reboot))
+        self.flash_reboot.pack(fill=X, padx=5, pady=5)
+
     def init_djt(self):
         def next(name):
             pics = {
@@ -192,7 +261,7 @@ class MyTool(Tk):
         self.log = Text(self.logwin)
         self.log.pack(padx=5, pady=5)
         Frame = ttk.Frame(self.logwin)
-        Button(Frame, text='清空', command=lambda: cz(self.log.delete, 1.0, END)).pack(side=LEFT)
+        Button(Frame, text='清空', command=lambda: cz(self.log.delete, 1.0, END)).pack(side=LEFT, padx=5, pady=5)
         Frame.pack(fill=X, side=BOTTOM)
         sys.stdout = StdoutRedirector(self.log)
         sys.stderr = StdoutRedirector(self.log)
@@ -200,6 +269,12 @@ class MyTool(Tk):
     def select_folder(self):
         if path := filedialog.askdirectory():
             self.folder_path.set(path)
+
+    def select_file(self):
+        if path := filedialog.askopenfilename(filetypes=[('bin', '*.bin'), ('image', '*.img')]):
+            return path
+        else:
+            return None
 
     def start_running(self):
         if not self.folder_path.get() or not self.number.get().isdigit():
@@ -249,12 +324,6 @@ class MyTool(Tk):
         messagebox.showinfo('关于',
                             'MEDL845 V3.2 \n版权: ColdWindScholar | XEKNICE | AGXMX '
                             '\n工具箱官网:miui845.agxmx.top\n2023年9月16日')
-
-
-class Flash_Tool(tk.Toplevel):
-    def __init__(self):
-        super().__init__()
-        self.title("线刷工具箱工具箱（MIX2S）")
 
 
 if __name__ == '__main__':
