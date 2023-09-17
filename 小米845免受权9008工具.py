@@ -80,8 +80,8 @@ def unlock_miacc():
 def end():
     print('正在关闭进程...')
     for t in [1, 2, 3]:
-        call('taskkill / im fastboot.exe / f', kz='N')
-        call('taskkill / im adb.exe / f', kz='N')
+        call('taskkill /im fastboot.exe /f', kz='N')
+        call('taskkill /im adb.exe /f', kz='N')
     root.destroy()
 
 
