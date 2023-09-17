@@ -213,7 +213,7 @@ class MyTool(Tk):
             self.close_button.config(state='disabled')
             self.start_edl.config(state='disabled')
             self.fix_button.config(state='disabled')
-            if errorlevel:=call(f'MIQC845Flash.exe -P {self.number.get()} {a} exit') == 0:
+            if errorlevel := call(f'MIQC845Flash.exe -P {self.number.get()} {a} exit') == 0:
                 messagebox.showinfo('刷机结束', '刷机进程结束！ 请长按电源键尝试重启？')
             else:
                 messagebox.showerror('刷机错误！', f'很抱歉， 刷机错误！错误代码：{errorlevel}')
@@ -249,6 +249,12 @@ class MyTool(Tk):
         messagebox.showinfo('关于',
                             'MEDL845 V3.2 \n版权: ColdWindScholar | XEKNICE | AGXMX '
                             '\n工具箱官网:miui845.agxmx.top\n2023年9月16日')
+
+
+class Flash_Tool(tk.Toplevel):
+    def __init__(self):
+        super().__init__()
+        self.title("线刷工具箱工具箱（MIX2S）")
 
 
 if __name__ == '__main__':
