@@ -203,7 +203,7 @@ class MyTool(Tk):
 
     def start_running(self):
         if not self.folder_path.get() or not self.number.get().isdigit():
-            messagebox.showerror('错误', 'ERROR:0*700FFFFF \n 请确保文件夹路径已选择且端口号为数字')
+            messagebox.showerror('错误', '请确保文件夹路径已选择且端口号为数字')
             return None
         else:
             path = self.folder_path.get()
@@ -213,10 +213,10 @@ class MyTool(Tk):
             self.close_button.config(state='disabled')
             self.start_edl.config(state='disabled')
             self.fix_button.config(state='disabled')
-            if call(f'MIQC845Flash.exe -P {self.number.get()} {a} exit') == 0:
+            if errorlevel:=call(f'MIQC845Flash.exe -P {self.number.get()} {a} exit') == 0:
                 messagebox.showinfo('刷机结束', '刷机进程结束！ 请长按电源键尝试重启？')
             else:
-                messagebox.showerror('ERROR?', 'ERROR! \n 0*000FF70F ')
+                messagebox.showerror('刷机错误！', f'很抱歉， 刷机错误！错误代码：{errorlevel}')
         self.start_button.config(state='normal')
         self.close_button.config(state='normal')
         self.start_edl.config(state='normal')
