@@ -143,7 +143,6 @@ class MyTool(Tk):
         self.start_edl.pack()
         self.close_button = Button(self.tab, text='关闭此程序', command=end)
         self.close_button.pack(side=BOTTOM)
-        # 刷入____
 
     def init_tab1(self):
 
