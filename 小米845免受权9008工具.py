@@ -150,7 +150,8 @@ class MyTool(Tk):
         self.fix_button.pack(padx=5, pady=5)
         self.fix_button = Button(self.tab1, text='强解bootloader锁', command=self.BL, width=20)
         self.fix_button.pack(padx=5, pady=5)
-        self.GY_button = Button(self.tab1, text='MIX2S专用FB镜像工具箱', command=lambda: cz(self.fbMIX2S), width=20)
+        self.GY_button = Button(self.tab1, text='MIX2S专用FB镜像工具箱',
+                                command=lambda: cz(os.system, "start res\\fbimg.bat"), width=20)
         self.GY_button.pack(padx=5, pady=5)
 
     def init_djt(self):
@@ -181,7 +182,8 @@ class MyTool(Tk):
     def init_about(self):
         self.GY_button = Button(self.about, text='关于', command=self.GY, width=20)
         self.GY_button.pack(padx=5, pady=5)
-        self.GY_button = Button(self.about, text='查看说明', command=self.SM, width=20)
+        self.GY_button = Button(self.about, text='查看说明', command=lambda: cz(os.system, 'start res/SM.png'),
+                                width=20)
         self.GY_button.pack(padx=5, pady=5)
         self.number_label = Label(self.about, text='官网链接：miui845.agxmx.top\nAGXMX & ColdWindScholar保留所有权利。')
         self.number_label.pack(side=BOTTOM)
@@ -223,20 +225,13 @@ class MyTool(Tk):
     def edl(self):
         self.start_edl.config(state='disabled', text="正在等待设备")
         call('res/fastboot.exe oem edl')
-        os.system('devmgmt.msc')
+        os.system('start devmgmt.msc')
         self.start_edl.config(state='normal', text='进入9008模式')
 
     def FIX(self):
         messagebox.showinfo('注意', '本功能需要程序拥有管理员权限！\n执行后请将电脑重新启动！')
         call('res/FIX.exe')
         call('res/USB.bat')
-
-    def SM(self):
-        cmd2 = 'start res/SM.png'
-        os.system(cmd2)
-
-    def fbMIX2S(self):
-        os.system("start res\\fbimg.bat")
 
     def ZHS(self):
         messagebox.showinfo('注意', '此功能仅限于845系列\n手机先进入TWRP模式')
