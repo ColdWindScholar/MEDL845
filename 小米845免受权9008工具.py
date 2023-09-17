@@ -79,8 +79,9 @@ def unlock_miacc():
 
 def end():
     print('正在关闭进程...')
-    call('taskkill / im fastboot.exe / f', kz='N')
-    call('taskkill / im adb.exe / f', kz='N')
+    for t in [1, 2, 3]:
+        call('taskkill / im fastboot.exe / f', kz='N')
+        call('taskkill / im adb.exe / f', kz='N')
     root.destroy()
 
 
@@ -199,10 +200,8 @@ class MyTool(Tk):
             self.folder_path.set(path)
 
     def start_running(self):
-        if self.folder_path.get():
-            self.number.get().isdigit()
-            messagebox.showerror('错误',
-                                 'ERROR:0*700FFFFF \n 请确保文件夹路径已选择且端口号为数字')
+        if not self.folder_path.get() or not self.number.get().isdigit():
+            messagebox.showerror('错误', 'ERROR:0*700FFFFF \n 请确保文件夹路径已选择且端口号为数字')
             return None
         else:
             path = self.folder_path.get()
