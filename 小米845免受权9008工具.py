@@ -173,6 +173,9 @@ class MyTool(Tk):
                 self.file_entry.setvar(path)
 
         def run():
+            if not self.file_entry.get():
+                print("请输入镜像路径")
+                return
             self.flash_run.configure(text='正在执行')
             disable()
             if self.flash_cz.get() == 1:
