@@ -179,11 +179,12 @@ class MyTool(Tk):
             self.flash_run.configure(text='正在执行')
             disable()
             if self.flash_cz.get() == 1:
-                call(f'fastboot flash {self.part.get()} {self.file_entry.get()}')
+                if call(f'fastboot flash {self.part.get()} {self.file_entry.get()}') != 0: print("操作失败！")
             elif self.flash_cz.get() == 2:
-                call(f'fastboot erase {self.part.get()}')
+                if call(f'fastboot erase {self.part.get()}') != 0: print("操作失败！")
             elif self.flash_cz.get() == 3:
-                call(f'fastboot boot {self.file_entry.get()}')
+                if call(f'fastboot boot {self.file_entry.get()}') != 0:
+                    print("操作失败！")
             self.flash_run.configure(text='执行')
             able()
 
@@ -223,7 +224,7 @@ class MyTool(Tk):
         Frame.pack(fill=X, padx=5, pady=5)
         self.flash_run = Button(self.flash, text='执行', command=lambda: cz(run))
         self.flash_run.pack(fill=X, padx=5, pady=5)
-        self.flash_reboot = Button(self.flash, text='重启手机', command=lambda :cz(reboot))
+        self.flash_reboot = Button(self.flash, text='重启手机', command=lambda: cz(reboot))
         self.flash_reboot.pack(fill=X, padx=5, pady=5)
 
     def init_djt(self):
