@@ -253,8 +253,7 @@ class MyTool(Tk):
         self.qh.pack()
 
     def init_about(self):
-        self.GY_button = Button(self.about, text='关于', command=self.GY, width=20)
-        self.GY_button.pack(padx=5, pady=5)
+        Label(self.about, text='MEDL845 V3.2', font=(None, 17)).pack(padx=5, pady=5)
         self.GY_button = Button(self.about, text='查看说明', command=lambda: cz(os.system, 'start res/SM.png'),
                                 width=20)
         self.GY_button.pack(padx=5, pady=5)
@@ -323,11 +322,6 @@ class MyTool(Tk):
                             '2: MIUI 9.6.3.0 \n小米MIX 2S: MIUI 9.6.8.0 \n小米平板4: MIUI 9.6.23.0 \n红米Note 5: MIUI 9.6.4.0 '
                             '\n版本以上系统自行拆机短接9008降级到MIUI9.6以下最好是出厂系统后再用此工具解锁BL')
         call('res/BL.exe')
-
-    def GY(self):
-        messagebox.showinfo('关于',
-                            'MEDL845 V3.2 \n版权: ColdWindScholar | XEKNICE | AGXMX '
-                            '\n工具箱官网:miui845.agxmx.top\n2023年9月16日')
 
 
 if __name__ == '__main__':
