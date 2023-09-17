@@ -170,7 +170,8 @@ class MyTool(Tk):
 
         def set_img():
             if path := self.select_file():
-                self.file_entry.setvar(path)
+                self.file_entry.delete(0, END)
+                self.file_entry.insert(0, path)
 
         def run():
             if not self.file_entry.get():
