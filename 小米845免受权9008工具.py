@@ -303,7 +303,7 @@ class MyTool(Tk):
 
     def edl(self):
         self.start_edl.config(state='disabled', text="正在等待设备")
-        call('res/fastboot.exe oem edl')
+        call('fastboot.exe oem edl')
         os.system('start devmgmt.msc')
         self.start_edl.config(state='normal', text='进入9008模式')
 
