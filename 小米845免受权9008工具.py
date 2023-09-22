@@ -144,13 +144,15 @@ class MyTool(Tk):
         self.close_button.pack(side=BOTTOM)
 
     def init_tab1(self):
-
-        self.fix_button = Button(self.tab1, text='安装/修复驱动', command=self.FIX, width=20)
-        self.fix_button.pack(padx=5, pady=5)
-        self.fix_button = Button(self.tab1, text='绕MIUI账号锁', command=lambda: cz(self.ZHS), width=20)
-        self.fix_button.pack(padx=5, pady=5)
-        self.fix_button = Button(self.tab1, text='强解bootloader锁', command=self.BL, width=20)
-        self.fix_button.pack(padx=5, pady=5)
+        if not ospath.exists('res' + sep + 'lite'):
+            self.fix_button = Button(self.tab1, text='安装/修复驱动', command=self.FIX, width=20)
+            self.fix_button.pack(padx=5, pady=5)
+            self.fix_button = Button(self.tab1, text='绕MIUI账号锁', command=lambda: cz(self.ZHS), width=20)
+            self.fix_button.pack(padx=5, pady=5)
+            self.fix_button = Button(self.tab1, text='强解bootloader锁', command=self.BL, width=20)
+            self.fix_button.pack(padx=5, pady=5)
+        else:
+            Label(self.tab1, text='MEDL845精简版', font=(None, 15)).pack(side=TOP, padx=5, pady=10)
 
     def init_flash(self):
         def disable():

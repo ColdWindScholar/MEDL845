@@ -24,6 +24,10 @@ jobs:
           Remove-Item .git -Recurse
           ls
           Compress-Archive -Path ./* -DestinationPath ../MEDL.zip
+          del res/*.exe
+          del res/*.usb
+          echo > res/lite
+          Compress-Archive -Path ./* -DestinationPath ../MEDL-lite.zip
           cd ..
       - name: Upload release
         uses: ncipollo/release-action@v1
