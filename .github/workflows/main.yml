@@ -25,7 +25,8 @@ jobs:
           ls
           Compress-Archive -Path ./* -DestinationPath ../MEDL.zip
           del res/*.exe
-          del res/*.usb
+          del res/*.bat
+          del res/*.zip
           echo lite > res/lite
           Compress-Archive -Path ./* -DestinationPath ../MEDL-lite.zip
           cd ..
