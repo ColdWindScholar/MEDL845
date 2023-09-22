@@ -1,8 +1,7 @@
-import os
 import subprocess
 import sys
 import tkinter as tk
-from os import getcwd
+from os import getcwd, name as osname, sep, system, path as ospath
 from threading import Thread
 from tkinter import filedialog
 from tkinter import messagebox
@@ -31,10 +30,10 @@ class StdoutRedirector(object):
 
 def call(exe, kz='Y', out=0, shstate=False, sp=0):
     if kz == "Y":
-        cmd = f'{getcwd()}{os.sep}{exe}'
+        cmd = f'{getcwd()}{sep}{exe}'
     else:
         cmd = exe
-    if os.name != 'posix':
+    if osname != 'posix':
         conf = subprocess.CREATE_NO_WINDOW
     else:
         if sp == 0:
@@ -152,9 +151,6 @@ class MyTool(Tk):
         self.fix_button.pack(padx=5, pady=5)
         self.fix_button = Button(self.tab1, text='强解bootloader锁', command=self.BL, width=20)
         self.fix_button.pack(padx=5, pady=5)
-        self.GY_button = Button(self.tab1, text='MIX2S专用FB镜像工具箱',
-                                command=lambda: cz(os.system, "start res\\fbimg.bat"), width=20)
-        self.GY_button.pack(padx=5, pady=5)
 
     def init_flash(self):
         def disable():
@@ -254,7 +250,7 @@ class MyTool(Tk):
 
     def init_about(self):
         Label(self.about, text='MEDL845 V3.2', font=(None, 17)).pack(padx=5, pady=5)
-        self.GY_button = Button(self.about, text='查看说明', command=lambda: cz(os.system, 'start res/SM.png'),
+        self.GY_button = Button(self.about, text='查看说明', command=lambda: cz(system, 'start res/SM.png'),
                                 width=20)
         self.GY_button.pack(padx=5, pady=5)
         self.number_label = Label(self.about, text='官网链接：miui845.agxmx.top\nAGXMX & ColdWindScholar保留所有权利。')
@@ -286,7 +282,7 @@ class MyTool(Tk):
         else:
             path = self.folder_path.get()
             converted_path = path.replace('/', '\\')
-            a = os.path.normpath(converted_path)
+            a = ospath.normpath(converted_path)
             self.start_button.config(state='disabled')
             self.close_button.config(state='disabled')
             self.start_edl.config(state='disabled')
@@ -303,7 +299,7 @@ class MyTool(Tk):
     def edl(self):
         self.start_edl.config(state='disabled', text="正在等待设备")
         call('fastboot.exe oem edl')
-        os.system('start devmgmt.msc')
+        system('start devmgmt.msc')
         self.start_edl.config(state='normal', text='进入9008模式')
 
     def FIX(self):
