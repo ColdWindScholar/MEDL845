@@ -22,12 +22,16 @@ jobs:
         run: |
           cd build
           Remove-Item .git -Recurse
+          echo 完整版
           ls
           Compress-Archive -Path ./* -DestinationPath ../MEDL.zip
           del res/*.exe
           del res/*.bat
           del res/*.zip
           echo lite > res/lite
+          echo 精简版
+          ls
+          ls res/*
           Compress-Archive -Path ./* -DestinationPath ../MEDL-lite.zip
           cd ..
       - name: Upload release
