@@ -26,7 +26,7 @@ jobs:
           Compress-Archive -Path ./* -DestinationPath ../MEDL.zip
           del res/*.exe
           del res/*.usb
-          echo > res/lite
+          echo lite > res/lite
           Compress-Archive -Path ./* -DestinationPath ../MEDL-lite.zip
           cd ..
       - name: Upload release
